@@ -1,0 +1,197 @@
+<!DOCTYPE HTML>
+<!--
+	Read Only by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<head>
+	<title>Foreign Speech Translation and Subtitles - Demo 2</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<style>
+		#body {
+			font-family: Arial, sans-serif;
+			max-width: 800px;
+			margin: 30px auto;
+			line-height: 1.5;
+		}
+
+		#subtitle-box {
+			margin-top: 20px;
+			padding: 18px;
+			background: #f1f1f1;
+			border-radius: 10px;
+			min-height: 60px;
+			font-size: 20px;
+			font-weight: 500;
+		}
+	</style>
+</head>
+
+<body class="is-preload">
+
+	<!-- Header -->
+	<section id="header">
+		<header>
+			<span class="image avatar"><img src="images/avatar.jpg" alt="" /></span>
+			<h1 id="logo"><a href="#">Final Project Demo</a></h1>
+			<p>CS563 Data Mining<br />
+			</p>
+		</header>
+		<nav id="nav">
+			<ul>
+				<li><a href="#one" class="active">Video Demo #2</a></li>
+				<li><a href="#three">Other Video Demos</a></li>
+				<li><a href="#four">Back to Main Page</a></li>
+			</ul>
+		</nav>
+		<footer>
+			<ul class="icons">
+				<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+				<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+				<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+				<li><a href="#" class="icon brands fa-github"><span class="label">Github</span></a></li>
+				<li><a href="#" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+			</ul>
+		</footer>
+	</section>
+
+	<!-- Wrapper -->
+	<div id="wrapper">
+
+		<!-- Main -->
+		<div id="main">
+
+			<!-- One -->
+			<section id="one">
+				<div class="image main" data-position="center">
+					<img src="images/banner.jpg" alt="" />
+				</div>
+				<div class="container">
+					<header class="major">
+						<h2>Video Demo #2</h2>
+						<p>Welcome to Waikiki Season 1 Episode 5<br />
+							<!-- template freebie by <a href="http://html5up.net">HTML5 UP</a>.</p> -->
+					</header>
+					<p>This is a scene from the korean drama, Welcome to Waikiki Season 1 episode 5. Welcome to Waikiki
+						is a comedy romance drama about a group of men trying to keep their guesthouse business alive.
+					</p>
+				</div>
+				<!-- YouTube iframe player -->
+				<div id="player"></div>
+
+				<!-- Subtitle display -->
+				<div id="subtitle-box">Loading translations...</div>
+
+				<script>
+					/*******************************************
+					 * 1. Insert your subtitle segments here!
+					 *******************************************/
+					const SUBTITLES = [
+						{ start: 0, end: 3, text: "Hello everyone!" },
+						{ start: 3, end: 7, text: "Welcome to our translation demo." },
+						{ start: 7, end: 11, text: "Let's begin!" }
+						// (Replace this with your real translated JSON)
+					];
+
+					/*******************************************
+					 * 2. Load YouTube Player API
+					 *******************************************/
+					var tag = document.createElement("script");
+					tag.src = "https://www.youtube.com/iframe_api";
+					document.body.appendChild(tag);
+
+					var player;
+
+					function onYouTubeIframeAPIReady() {
+						player = new YT.Player("player", {
+							height: "400",
+							width: "700",
+							videoId: "kLmf5SzX2y0",  // https://www.youtube.com/watch?v=tnGwU_WkG44
+							events: { onReady: onPlayerReady }
+						});
+					}
+
+					function onPlayerReady() {
+						setInterval(() => {
+							const currentTime = player.getCurrentTime();
+							updateSubtitles(currentTime);
+						}, 200); // Check every 200ms
+					}
+
+					/*******************************************
+					 * 3. Show matching subtitle segment
+					 *******************************************/
+					function updateSubtitles(time) {
+						const segment = SUBTITLES.find(
+							s => time >= s.start && time <= s.end
+						);
+
+						document.getElementById("subtitle-box").textContent =
+							segment ? segment.text : "";
+					}
+				</script>
+			</section>
+
+			<!-- Three -->
+			<section id="three">
+				<div class="container">
+					<h3>Other Video Demos</h3>
+					<p>Here are a few video demos of different Korean media. Our demos include scenes from korean dramas
+						and K-Pop music videos.</p>
+					<div class="features">
+						<article>
+							<a href="demo1.html" class="image"><img src="https://img.youtube.com/vi/tnGwU_WkG44/0.jpg"
+									alt="" /></a>
+							<div class="inner">
+								<h4>Video Demo #1</h4>
+								<p>Funny k-drama scene from Welcome to Waikiki Season 2 Episode 14.</p>
+							</div>
+						</article>
+						<article>
+							<a href="demo3.html" class="image"><img src="https://img.youtube.com/vi/0bIRwBpBcZQ/0.jpg"
+									alt="" /></a>
+							<div class="inner">
+								<h4>Video Demo #3</h4>
+								<p>"CAKE" music video from ITZY.</p>
+							</div>
+						</article>
+					</div>
+				</div>
+			</section>
+			<!-- Four -->
+			<section id="four">
+				<div class="container">
+					<a href="index.html">Back to main page</a>
+				</div>
+			</section>
+
+		</div>
+
+		<!-- Footer -->
+		<section id="footer">
+			<div class="container">
+				<ul class="copyright">
+					<li>&copy; Untitled. All rights reserved.</li>
+					<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+				</ul>
+			</div>
+		</section>
+
+	</div>
+
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery.scrollex.min.js"></script>
+	<script src="assets/js/jquery.scrolly.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
+
+</body>
+
+</html>
