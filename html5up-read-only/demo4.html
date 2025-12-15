@@ -7,7 +7,7 @@
 <html>
 
 <head>
-    <title>Foreign Speech Translation and Subtitles - Demo 1</title>
+    <title>Foreign Speech Translation and Subtitles - Demo 4</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
@@ -51,7 +51,7 @@
         </header>
         <nav id="nav">
             <ul>
-                <li><a href="#one" class="active">Video Demo #1</a></li>
+                <li><a href="#one" class="active">Video Demo #4</a></li>
                 <li><a href="#three">Other Video Demos</a></li>
                 <li><a href="#four">Back to Main Page</a></li>
             </ul>
@@ -71,12 +71,11 @@
                 </div>
                 <div class="container">
                     <header class="major">
-                        <h2>Video Demo #1</h2>
-                        <p>Welcome to Waikiki Season 2 Episode 14<br />
+                        <h2>Video Demo #4</h2>
+                        <p>DEAN - Instagram<br />
                             <!-- template freebie by <a href="http://html5up.net">HTML5 UP</a>.</p> -->
                     </header>
-                    <p>This is a scene from the korean drama, Welcome to Waikiki Season 2 episode 14. Welcome to Waikiki
-                        is a comedy romance drama about a group of men trying to keep their guesthouse business alive.
+                    <p> Music video for the song Instagram by DEAN, a popular R&B korean artist.
                     </p>
                 </div>
                 <!-- YouTube iframe player -->
@@ -97,6 +96,14 @@
                         and K-Pop music videos.</p>
                     <div class="features">
                         <article>
+                            <a href="demo1.html" class="image"><img src="https://img.youtube.com/vi/tnGwU_WkG44/0.jpg"
+                                    alt="" /></a>
+                            <div class="inner">
+                                <h4>Video Demo #1</h4>
+                                <p>Funny k-drama scene from Welcome to Waikiki Season 2 Episode 14.</p>
+                            </div>
+                        </article>
+                        <article>
                             <a href="demo2.html" class="image"><img src="https://img.youtube.com/vi/kLmf5SzX2y0/0.jpg"
                                     alt="" /></a>
                             <div class="inner">
@@ -110,14 +117,6 @@
                             <div class="inner">
                                 <h4>Video Demo #3</h4>
                                 <p>"Allergy" music video from G-IDLE.</p>
-                            </div>
-                        </article>
-                        <article>
-                            <a href="demo4.html" class="image"><img src="https://img.youtube.com/vi/wKyMIrBClYw/0.jpg"
-                                    alt="" /></a>
-                            <div class="inner">
-                                <h4>Video Demo #4</h4>
-                                <p>Music video for Instagram by DEAN.</p>
                             </div>
                         </article>
                     </div>
@@ -159,7 +158,7 @@
          * 1. Insert your subtitle segments here!
          *******************************************/
         let SUBTITLES = [];
-        const video_index = 2;
+        const video_index = 5;
         const translator = "DeepL translation";
         fetch("../data/korean_subtitles.json")
             .then(res => res.json())
@@ -195,8 +194,13 @@
             player = new YT.Player("player", {
                 height: "400",
                 width: "700",
-                videoId: "tnGwU_WkG44",  // https://www.youtube.com/watch?v=tnGwU_WkG44
-                events: { onReady: onPlayerReady }
+                videoId: "wKyMIrBClYw",
+                playerVars: {
+                    origin: window.location.origin
+                },
+                events: {
+                    onReady: onPlayerReady
+                }
             });
         }
 
