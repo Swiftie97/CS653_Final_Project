@@ -3,3 +3,4 @@ token_login.py
 __pycache__/
 *.pyc
 venv_CS653_Final_Project/
+*.wav
