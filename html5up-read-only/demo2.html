@@ -28,6 +28,14 @@
 			font-size: 20px;
 			font-weight: 500;
 		}
+
+		.video-wrapper {
+			display: flex;
+			justify-content: center;
+			/* horizontal centering */
+			margin-top: 20px;
+			/* optional spacing */
+		}
 	</style>
 </head>
 
@@ -72,59 +80,13 @@
 					</p>
 				</div>
 				<!-- YouTube iframe player -->
-				<div id="player"></div>
-
-				<!-- Subtitle display -->
-				<div id="subtitle-box">Loading translations...</div>
-
-				<script>
-					/*******************************************
-					 * 1. Insert your subtitle segments here!
-					 *******************************************/
-					const SUBTITLES = [
-						{ start: 0, end: 3, text: "Hello everyone!" },
-						{ start: 3, end: 7, text: "Welcome to our translation demo." },
-						{ start: 7, end: 11, text: "Let's begin!" }
-						// (Replace this with your real translated JSON)
-					];
-
-					/*******************************************
-					 * 2. Load YouTube Player API
-					 *******************************************/
-					var tag = document.createElement("script");
-					tag.src = "https://www.youtube.com/iframe_api";
-					document.body.appendChild(tag);
-
-					var player;
-
-					function onYouTubeIframeAPIReady() {
-						player = new YT.Player("player", {
-							height: "400",
-							width: "700",
-							videoId: "kLmf5SzX2y0",  // https://www.youtube.com/watch?v=tnGwU_WkG44
-							events: { onReady: onPlayerReady }
-						});
-					}
-
-					function onPlayerReady() {
-						setInterval(() => {
-							const currentTime = player.getCurrentTime();
-							updateSubtitles(currentTime);
-						}, 200); // Check every 200ms
-					}
-
-					/*******************************************
-					 * 3. Show matching subtitle segment
-					 *******************************************/
-					function updateSubtitles(time) {
-						const segment = SUBTITLES.find(
-							s => time >= s.start && time <= s.end
-						);
-
-						document.getElementById("subtitle-box").textContent =
-							segment ? segment.text : "";
-					}
-				</script>
+				<div class="video-wrapper">
+					<div id="player"></div>
+				</div>
+				<div class="video-wrapper">
+					<!-- Subtitle display -->
+					<div id="subtitle-box">Loading translations...</div>
+				</div>
 			</section>
 
 			<!-- Three -->
@@ -143,11 +105,11 @@
 							</div>
 						</article>
 						<article>
-							<a href="demo3.html" class="image"><img src="https://img.youtube.com/vi/0bIRwBpBcZQ/0.jpg"
+							<a href="demo3.html" class="image"><img src="https://img.youtube.com/vi/XZaBkbvteBc/0.jpg"
 									alt="" /></a>
 							<div class="inner">
 								<h4>Video Demo #3</h4>
-								<p>"CAKE" music video from ITZY.</p>
+								<p>"Allergy" music video from G-IDLE.</p>
 							</div>
 						</article>
 					</div>
@@ -182,7 +144,72 @@
 	<script src="assets/js/breakpoints.min.js"></script>
 	<script src="assets/js/util.js"></script>
 	<script src="assets/js/main.js"></script>
+	<script>
+		console.log("SCRIPT STARTED");
+		/*******************************************
+		 * 1. Insert your subtitle segments here!
+		 *******************************************/
+		let SUBTITLES = [];
+		const video_index = 3;
+		const translator = "DeepL translation";
+		fetch("../data/korean_subtitles.json")
+			.then(res => res.json())
+			.then(data => {
+				const video_block = data.find(v => v.video === video_index);
+				console.log("VIDEO BLOCK:", video_block);
+				if (!video_block) {
+					console.error("Video index not found:", video_index);
+					return;
+				}
+				console.log("FIRST ROW:", video_block.srt[0]);
+				SUBTITLES = video_block.srt.map(row => ({
+					start: row.start_seconds,
+					end: row.end_seconds,
+					text: row[translator]
+				}));
+				console.log("Subtitles loaded:", SUBTITLES);
+				//console.log("RAW JSON:", data);
 
+			})
+			.catch(err => console.error("Subtitle load error:", err));
+
+		/*******************************************
+		 * 2. Load YouTube Player API
+		 *******************************************/
+		var tag = document.createElement("script");
+		tag.src = "https://www.youtube.com/iframe_api";
+		document.body.appendChild(tag);
+
+		var player;
+
+		function onYouTubeIframeAPIReady() {
+			player = new YT.Player("player", {
+				height: "400",
+				width: "700",
+				videoId: "kLmf5SzX2y0",  // https://www.youtube.com/watch?v=tnGwU_WkG44
+				events: { onReady: onPlayerReady }
+			});
+		}
+
+		function onPlayerReady() {
+			setInterval(() => {
+				const currentTime = player.getCurrentTime();
+				updateSubtitles(currentTime);
+			}, 200); // Check every 200ms
+		}
+
+		/*******************************************
+		 * 3. Show matching subtitle segment
+		 *******************************************/
+		function updateSubtitles(time) {
+			const segment = SUBTITLES.find(
+				s => time >= s.start && time <= s.end
+			);
+
+			document.getElementById("subtitle-box").textContent =
+				segment ? segment.text : "";
+		}
+	</script>
 </body>
 
 </html>
